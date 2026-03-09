@@ -18,7 +18,7 @@ export class PrismaService
   private readonly logger = new Logger(PrismaService.name);
 
   constructor(private configService: ConfigService<EnvironmentConfig>) {
-    // Obtener la cadena de conexión desde las variables de entorno de forma seguraddcddd
+    // Obtener la cadena de conexión desde las variables de entorno de forma segura
     const connectionString = configService.get('database.url', { infer: true });
     const pool = new Pool({ connectionString });
 

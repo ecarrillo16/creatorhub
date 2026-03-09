@@ -15,7 +15,7 @@ import { PrismaModule } from './prisma/prisma.module';
       validationSchema: envVarsSchema, // Aquí es donde ocurre la magia
       validationOptions: {
         allowUnknown: true, // Permite variables de entorno extra no definidas en el esquema
-        abortEarly: true, // DEtiene el arranque al primer error encontrado
+        abortEarly: true, // Detiene el arranque al primer error encontrado
       },
     }),
     PrismaModule,

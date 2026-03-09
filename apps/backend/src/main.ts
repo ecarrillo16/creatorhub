@@ -24,7 +24,7 @@ async function bootstrap() {
   const configService = app.get<ConfigService<EnvironmentConfig>>(ConfigService);
   const port = configService.get('port', { infer: true }) || 3000;
 
-  // 4. Inicar servidor
+  // 4. Iniciar servidor
   await app.listen(port);
   logger.log(`Servidor escuchando en: http://localhost:${port}/api`);
 }
