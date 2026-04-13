@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiExcludeController } from '@nestjs/swagger/dist/decorators/api-exclude-controller.decorator';
 import {
   DiskHealthIndicator,
   HealthCheck,
@@ -8,6 +9,7 @@ import {
 } from '@nestjs/terminus';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+@ApiExcludeController()
 @Controller('health')
 export class HealthController {
   constructor(

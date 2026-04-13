@@ -1,7 +1,11 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder } from '@nestjs/swagger/dist/document-builder';
+import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './common/filters/http-exception.filter';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { EnvironmentConfig } from './config/configuration';
 
 async function bootstrap() {
@@ -11,7 +15,13 @@ async function bootstrap() {
   // 1. Prefijos para rutas
   app.setGlobalPrefix('api'); // Agrega un prefijo global para todas las rutas
 
-  // 2. Validación global
+  // 2. Activar Versionamiento de tipo URI
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1', // Por defecto todas las rutas serán v1
+  });
+
+  // 3. Validación global con pipes
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // Elimina propiedades no definidas en los DTOs
@@ -20,11 +30,32 @@ async function bootstrap() {
     }),
   );
 
-  // 3. Extraer el puerto de las variables de entorno con un valor por defecto
-  const configService = app.get<ConfigService<EnvironmentConfig>>(ConfigService);
+  // 4. Filtro de excepciones global
+  app.useGlobalFilters(new AllExceptionsFilter());
+
+  // 5. Interceptors globales (ejemplo: logging)
+  app.useGlobalInterceptors(new LoggingInterceptor());
+
+  // 6. Swagger - Documentación de la API
+  const config = new DocumentBuilder()
+    .setTitle('CreatorHub API')
+    .setDescription(
+      'Documentación oficial de la API para gestión de recursos de creadores',
+    )
+    .setVersion('1.0') // Versión del documento
+    .addServer('/api/v1') // Ayuda a Swagger a saber la base real
+    .addTag('resources') // Agrupa tus rutas por etiquetas
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document); // La URL será /api/docs
+
+  // 7. Extraer el puerto de las variables de entorno con un valor por defecto
+  const configService =
+    app.get<ConfigService<EnvironmentConfig>>(ConfigService);
   const port = configService.get('port', { infer: true }) || 3000;
 
-  // 4. Iniciar servidor
+  // 8. Iniciar servidor
   await app.listen(port);
   logger.log(`Servidor escuchando en: http://localhost:${port}/api`);
 }
