@@ -15,7 +15,7 @@ export class CreateResourceDto {
   @IsNotEmpty()
   @MinLength(3)
   @ApiProperty({ example: 'Guía de NestJS', description: 'Título del recurso' })
-  title: string;
+  title!: string;
 
   @IsString()
   @IsOptional()
@@ -27,5 +27,5 @@ export class CreateResourceDto {
     example: 'https://docs.nestjs.com',
     description: 'URL del sitio',
   })
-  url: string;
+  url!: string;
 }

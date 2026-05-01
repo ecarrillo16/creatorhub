@@ -7,6 +7,7 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { ResourceMapper } from './mapper/resource.mapper';
+import { Prisma } from 'src/generated/prisma/client';
 
 @Injectable()
 export class ResourcesService {
@@ -21,12 +22,20 @@ export class ResourcesService {
       return await this.prisma.resource.create({
         data: createResourceDto,
       });
-    } catch (error) {
+    } catch (error: unknown) {
+      this.logger.error(
+        'Error al crear recurso',
+        error instanceof Error ? error.stack : String(error),
+      );
+
       // Manejo profesional de errores de base de datos
-      if (error.code === 'P2002') {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.message.includes('P2002')
+      ) {
         throw new ConflictException('Ya existe un recurso con esta URL');
       }
-      this.logger.error('Error al crear recurso', error.stack);
+
       throw new InternalServerErrorException(
         'Error inesperado al guardar el recurso',
       );

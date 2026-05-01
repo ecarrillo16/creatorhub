@@ -11,7 +11,7 @@ export class ResourceMapper {
       title: entity.title.toUpperCase(), // Ejemplo de transformación de negocio
       url: entity.url,
       description: entity.description || 'Sin descripción disponible',
-      
+
       // Formateamos la fecha a algo más profesional: "18 de marzo, 2026"
       publishedAt: entity.createdAt.toLocaleDateString('es-PA', {
         year: 'numeric',

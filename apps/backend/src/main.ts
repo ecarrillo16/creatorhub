@@ -42,13 +42,18 @@ async function bootstrap() {
     .setDescription(
       'Documentación oficial de la API para gestión de recursos de creadores',
     )
-    .setVersion('1.0') // Versión del documento
-    .addServer('/api/v1') // Ayuda a Swagger a saber la base real
-    .addTag('resources') // Agrupa tus rutas por etiquetas
+    .setVersion('1.0')
+    // .addServer('/api/v1')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document); // La URL será /api/docs
+  SwaggerModule.setup('docs', app, document, {
+    swaggerOptions: {
+      // persistAuthorization: true, // Mantiene el token en Swagger UI
+      tagsSorter: 'alpha', // Ordena tags (auth, users)
+      operationsSorter: 'alpha', // Ordena métodos (get, post)
+    },
+  });
 
   // 7. Extraer el puerto de las variables de entorno con un valor por defecto
   const configService =
@@ -59,4 +64,4 @@ async function bootstrap() {
   await app.listen(port);
   logger.log(`Servidor escuchando en: http://localhost:${port}/api`);
 }
-bootstrap();
+void bootstrap();
