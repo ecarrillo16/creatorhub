@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Resource
@@ -30,6 +30,7 @@ export type ResourceMinAggregateOutputType = {
   description: string | null
   url: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ResourceMaxAggregateOutputType = {
@@ -38,6 +39,7 @@ export type ResourceMaxAggregateOutputType = {
   description: string | null
   url: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ResourceCountAggregateOutputType = {
@@ -46,6 +48,7 @@ export type ResourceCountAggregateOutputType = {
   description: number
   url: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -56,6 +59,7 @@ export type ResourceMinAggregateInputType = {
   description?: true
   url?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ResourceMaxAggregateInputType = {
@@ -64,6 +68,7 @@ export type ResourceMaxAggregateInputType = {
   description?: true
   url?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ResourceCountAggregateInputType = {
@@ -72,6 +77,7 @@ export type ResourceCountAggregateInputType = {
   description?: true
   url?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -153,12 +159,13 @@ export type ResourceGroupByOutputType = {
   description: string | null
   url: string
   createdAt: Date
+  updatedAt: Date
   _count: ResourceCountAggregateOutputType | null
   _min: ResourceMinAggregateOutputType | null
   _max: ResourceMaxAggregateOutputType | null
 }
 
-type GetResourceGroupByPayload<T extends ResourceGroupByArgs> = Prisma.PrismaPromise<
+export type GetResourceGroupByPayload<T extends ResourceGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ResourceGroupByOutputType, T['by']> &
       {
@@ -182,6 +189,7 @@ export type ResourceWhereInput = {
   description?: Prisma.StringNullableFilter<"Resource"> | string | null
   url?: Prisma.StringFilter<"Resource"> | string
   createdAt?: Prisma.DateTimeFilter<"Resource"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Resource"> | Date | string
 }
 
 export type ResourceOrderByWithRelationInput = {
@@ -190,6 +198,7 @@ export type ResourceOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ResourceWhereUniqueInput = Prisma.AtLeast<{
@@ -201,6 +210,7 @@ export type ResourceWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Resource"> | string
   description?: Prisma.StringNullableFilter<"Resource"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Resource"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Resource"> | Date | string
 }, "id" | "url">
 
 export type ResourceOrderByWithAggregationInput = {
@@ -209,6 +219,7 @@ export type ResourceOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ResourceCountOrderByAggregateInput
   _max?: Prisma.ResourceMaxOrderByAggregateInput
   _min?: Prisma.ResourceMinOrderByAggregateInput
@@ -223,6 +234,7 @@ export type ResourceScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"Resource"> | string | null
   url?: Prisma.StringWithAggregatesFilter<"Resource"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Resource"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Resource"> | Date | string
 }
 
 export type ResourceCreateInput = {
@@ -231,6 +243,7 @@ export type ResourceCreateInput = {
   description?: string | null
   url: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ResourceUncheckedCreateInput = {
@@ -239,6 +252,7 @@ export type ResourceUncheckedCreateInput = {
   description?: string | null
   url: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ResourceUpdateInput = {
@@ -247,6 +261,7 @@ export type ResourceUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ResourceUncheckedUpdateInput = {
@@ -255,6 +270,7 @@ export type ResourceUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ResourceCreateManyInput = {
@@ -263,6 +279,7 @@ export type ResourceCreateManyInput = {
   description?: string | null
   url: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ResourceUpdateManyMutationInput = {
@@ -271,6 +288,7 @@ export type ResourceUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ResourceUncheckedUpdateManyInput = {
@@ -279,6 +297,7 @@ export type ResourceUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   url?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ResourceCountOrderByAggregateInput = {
@@ -287,6 +306,7 @@ export type ResourceCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ResourceMaxOrderByAggregateInput = {
@@ -295,6 +315,7 @@ export type ResourceMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ResourceMinOrderByAggregateInput = {
@@ -303,6 +324,7 @@ export type ResourceMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   url?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -317,6 +339,7 @@ export type ResourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   description?: boolean
   url?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["resource"]>
 
 export type ResourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -325,6 +348,7 @@ export type ResourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   description?: boolean
   url?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["resource"]>
 
 export type ResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -333,6 +357,7 @@ export type ResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   description?: boolean
   url?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["resource"]>
 
 export type ResourceSelectScalar = {
@@ -341,9 +366,10 @@ export type ResourceSelectScalar = {
   description?: boolean
   url?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type ResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "url" | "createdAt", ExtArgs["result"]["resource"]>
+export type ResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "url" | "createdAt" | "updatedAt", ExtArgs["result"]["resource"]>
 
 export type $ResourcePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Resource"
@@ -354,6 +380,7 @@ export type $ResourcePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     description: string | null
     url: string
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["resource"]>
   composites: {}
 }
@@ -782,6 +809,7 @@ export interface ResourceFieldRefs {
   readonly description: Prisma.FieldRef<"Resource", 'String'>
   readonly url: Prisma.FieldRef<"Resource", 'String'>
   readonly createdAt: Prisma.FieldRef<"Resource", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Resource", 'DateTime'>
 }
     
 
@@ -958,6 +986,11 @@ export type ResourceFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Skip the first `n` Resources.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Resources.
+   */
   distinct?: Prisma.ResourceScalarFieldEnum | Prisma.ResourceScalarFieldEnum[]
 }
 

@@ -1,7 +1,4 @@
-import {
-  ApiProperty,
-  ApiPropertyOptional,
-} from '@nestjs/swagger/dist/decorators/api-property.decorator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsOptional,

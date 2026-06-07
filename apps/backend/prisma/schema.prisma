@@ -10,8 +10,10 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid())
+  username  String
   email     String   @unique
   password  String
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -22,4 +24,5 @@ model Resource {
   description String?
   url         String   @unique
   createdAt   DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
