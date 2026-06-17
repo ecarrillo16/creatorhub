@@ -28,7 +28,9 @@ export class PrismaExceptionInterceptor implements NestInterceptor {
 
   intercept<T>(_: ExecutionContext, next: CallHandler<T>): Observable<T> {
     return next.handle().pipe(
-      catchError((error: unknown) => {
+      catchError((err: unknown) => {
+        const error = err;
+
         // Manejo específico de errores de Prisma
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           const stack = error.stack || 'No stack trace available';
