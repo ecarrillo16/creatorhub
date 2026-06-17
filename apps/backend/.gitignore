@@ -62,3 +62,10 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 #Ignore vscode AI rules
 .github/instructions/codacy.instructions.md
+
+# Codacy CLI
+.codacy/
+tools-configs/
+.gitignore
+cli-config.yaml
+logs/
