@@ -17,6 +17,7 @@ export default tseslint.config(
         ...globals.node,
         ...globals.jest,
       },
+      sourceType: 'module',
       parserOptions: {
         project: ['./apps/*/tsconfig.json', './tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
