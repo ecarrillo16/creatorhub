@@ -1,9 +1,9 @@
----
+# Configuración de Codacy para el proyecto
 engines:
   eslint:
     rules:
       # Desactiva las reglas de tipado inseguro que fallan por falta de node_modules en Codacy
-      "@typescript-eslint/no-unsafe-call": "off"
-      "@typescript-eslint/no-unsafe-assignment": "off"
-      "@typescript-eslint/no-unsafe-member-access": "off"
-      "@typescript-eslint/no-unsafe-argument": "off"
+      '@typescript-eslint/no-unsafe-call': 'off'
+      '@typescript-eslint/no-unsafe-assignment': 'off'
+      '@typescript-eslint/no-unsafe-member-access': 'off'
+      '@typescript-eslint/no-unsafe-argument': 'off'
