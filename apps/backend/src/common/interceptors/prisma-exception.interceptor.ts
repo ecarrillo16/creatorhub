@@ -6,6 +6,7 @@ import {
   Logger,
   ConflictException,
   InternalServerErrorException,
+  HttpException,
 } from '@nestjs/common';
 import { Observable, catchError } from 'rxjs';
 import { Prisma } from '../../generated/prisma/client';
@@ -25,9 +26,9 @@ import { Prisma } from '../../generated/prisma/client';
 export class PrismaExceptionInterceptor implements NestInterceptor {
   private readonly logger = new Logger('PrismaExceptionInterceptor');
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept<T>(_: ExecutionContext, next: CallHandler<T>): Observable<T> {
     return next.handle().pipe(
-      catchError((error: any) => {
+      catchError((error: unknown) => {
         // Manejo específico de errores de Prisma
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           const stack = error.stack || 'No stack trace available';
@@ -62,17 +63,16 @@ export class PrismaExceptionInterceptor implements NestInterceptor {
           );
         }
 
-        // Si ya es una excepción HTTP, relanzarla sin cambios
-        // (BadRequestException, NotFoundException, ConflictException, etc.)
-        if (error.status && error.message) {
+        if (error instanceof HttpException) {
           throw error;
         }
 
-        // Otros errores no previstos
-        this.logger.error(
-          `Error inesperado: ${error.message}`,
-          error.stack || 'No stack trace available',
-        );
+        if (error instanceof Error) {
+          this.logger.error(`Error inesperado: ${error.message}`, error.stack);
+        } else {
+          this.logger.error('Error inesperado');
+        }
+
         throw new InternalServerErrorException(
           'Error inesperado al procesar la solicitud',
         );
