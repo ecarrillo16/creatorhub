@@ -20,6 +20,7 @@ import { UsersMapper } from './mapper/users.mapper';
 @Injectable()
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly authService: AuthService,
