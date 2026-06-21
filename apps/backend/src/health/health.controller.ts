@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiExcludeController } from '@nestjs/swagger/dist/decorators/api-exclude-controller.decorator';
+import { ApiExcludeController } from '@nestjs/swagger';
 import {
   DiskHealthIndicator,
   HealthCheck,

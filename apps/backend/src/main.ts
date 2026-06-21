@@ -1,11 +1,12 @@
+import 'reflect-metadata';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder } from '@nestjs/swagger/dist/document-builder';
-import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './common/filters/http-exception.filter';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { PrismaExceptionInterceptor } from './common/interceptors/prisma-exception.interceptor';
 import { EnvironmentConfig } from './config/configuration';
 
 async function bootstrap() {
@@ -33,8 +34,13 @@ async function bootstrap() {
   // 4. Filtro de excepciones global
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  // 5. Interceptors globales (ejemplo: logging)
-  app.useGlobalInterceptors(new LoggingInterceptor());
+  // 5. Interceptors globales
+  // Orden importante: PrismaExceptionInterceptor primero (convierte errores Prisma)
+  // Luego LoggingInterceptor (registra todas las operaciones)
+  app.useGlobalInterceptors(
+    new PrismaExceptionInterceptor(),
+    new LoggingInterceptor(),
+  );
 
   // 6. Swagger - Documentación de la API
   const config = new DocumentBuilder()
