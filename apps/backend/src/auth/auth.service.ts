@@ -1,26 +1,46 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import bcrypt from 'bcryptjs';
+import { UsersMapper } from './../users/mapper/users.mapper';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CryptoService } from 'src/shared/crypto/crypto.service';
+import { JwtService } from '@nestjs/jwt';
+import { LoginResponseDto } from './dto/login-response.dto';
 
 @Injectable()
 export class AuthService {
-  private static readonly SALT_ROUNDS = 10;
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cryptoService: CryptoService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  async hashPassword(password: string): Promise<string> {
-    if (!password) {
-      throw new BadRequestException('La contraseña es requerida');
+  public async login(
+    email: string,
+    password: string,
+  ): Promise<LoginResponseDto> {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error('Credenciales inválidas');
     }
 
-    return await bcrypt.hash(password, AuthService.SALT_ROUNDS);
-  }
+    const passwordValid = await this.cryptoService.comparePasswords(
+      password,
+      user.password,
+    );
 
-  async comparePasswords(
-    plainPassword: string,
-    hashedPassword: string,
-  ): Promise<boolean> {
-    if (!plainPassword || !hashedPassword) {
-      throw new BadRequestException('Las credenciales son inválidas');
+    if (!passwordValid) {
+      throw new Error('Credenciales inválidas');
     }
 
-    return await bcrypt.compare(plainPassword, hashedPassword);
+    const payload = { sub: user.id, email: user.email };
+
+    const response = {
+      accessToken: this.jwtService.sign(payload),
+      user: UsersMapper.toResponse(user),
+    };
+
+    return response;
   }
 }

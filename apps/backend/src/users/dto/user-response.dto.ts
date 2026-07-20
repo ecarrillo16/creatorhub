@@ -21,7 +21,14 @@ export class UserResponseDto {
     example: 'John Doe',
     description: 'Nombre completo del usuario',
   })
-  name: string;
+  username: string;
+
+  @Expose()
+  @ApiProperty({
+    example: true,
+    description: 'Indica si el usuario está activo',
+  })
+  isActive: boolean;
 
   @Expose()
   @ApiProperty({

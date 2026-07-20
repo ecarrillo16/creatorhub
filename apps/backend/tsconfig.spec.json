@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json", // Hereda la configuración base de tu app
+  "compilerOptions": {
+    "types": ["jest", "node"]    // 💡 LA LÍNEA CLAVE: Le dice a TS que cargue los tipos de Jest globales
+  },
+  "include": [
+    "src/**/*..spec.ts",         // Incluye tus archivos de pruebas unitarias
+    "src/**/*.d.ts"
+  ]
+}

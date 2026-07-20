@@ -50,7 +50,6 @@ async function bootstrap() {
     )
     .setVersion('1.0') // Versión del documento
     .addServer('/api/v1') // Ayuda a Swagger a saber la base real
-    .addTag('resources') // Agrupa tus rutas por etiquetas
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -64,5 +63,9 @@ async function bootstrap() {
   // 8. Iniciar servidor
   await app.listen(port);
   logger.log(`Servidor escuchando en: http://localhost:${port}/api`);
+
+  app.enableCors({
+    origin: `http://localhost:${port}/api`,
+  }); // O el puerto que use tu front
 }
 bootstrap();
