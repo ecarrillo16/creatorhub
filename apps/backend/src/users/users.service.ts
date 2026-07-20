@@ -4,7 +4,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { AuthService } from '../auth/auth.service';
+import { CryptoService } from 'src/shared/crypto/crypto.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
@@ -23,7 +23,7 @@ export class UsersService {
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly authService: AuthService,
+    private readonly cryptoService: CryptoService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
@@ -35,7 +35,7 @@ export class UsersService {
     this.logger.log(`Creando nuevo usuario con email: ${createUserDto.email}`);
 
     // El interceptor convertirá automáticamente P2002 en ConflictException
-    const hashedPassword = await this.authService.hashPassword(
+    const hashedPassword = await this.cryptoService.hashPassword(
       createUserDto.password,
     );
 
@@ -92,7 +92,7 @@ export class UsersService {
 
     // El interceptor convertirá automáticamente P2002 en ConflictException
     const password = updateUserDto.password
-      ? await this.authService.hashPassword(updateUserDto.password)
+      ? await this.cryptoService.hashPassword(updateUserDto.password)
       : existing.password;
 
     const response = await this.prisma.user.update({
